@@ -29,6 +29,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
-For any inquiries or feedback, feel free to reach out to us at [example@email.com](mailto:example@email.com).
+For any inquiries or feedback, feel free to reach out to us at [psaharsh24@gmail.com](mailto:psaharsh24@gmail.com).
 
 Let's embark on this cosmic coding journey together! 🌌✨
