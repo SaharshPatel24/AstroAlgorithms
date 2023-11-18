@@ -12,12 +12,15 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/user.dto';
 import { User } from './interface/user.interface';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @ApiResponse({ status: 201, description: 'The user has been successfully created.'})
   @UsePipes(new ValidationPipe({ transform: true }))
   async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     try {
