@@ -1,10 +1,4 @@
-import {
-  BadRequestException,
-  ConflictException,
-  Injectable,
-  Module,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
@@ -33,7 +27,7 @@ export class UserService {
 
   async findUserById(id: string): Promise<User | null> {
     if (!Types.ObjectId.isValid(id)) {
-      return null
+      return null;
     }
     const user = await this.userModel.findOne({ _id: id });
     if (!user) {

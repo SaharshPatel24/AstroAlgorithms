@@ -1,6 +1,7 @@
 // user.schema.ts
 import * as mongoose from 'mongoose';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface CustomUpdateQuery<T extends Document> {
   email?: string;
 }
@@ -15,9 +16,7 @@ export const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre('save', function (next) {
-  // @ts-ignore
   if (this.isModified('email')) {
-    // @ts-ignore
     this.email = this.email.toLowerCase();
   }
   next();

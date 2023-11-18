@@ -19,12 +19,6 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     '@typescript-eslint/explicit-module-boundary-types': ['error'],
-    '@typescript-eslint/explicit-member-accessibility': [
-      'error',
-      {
-        accessibility: 'explicit',
-      },
-    ],
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',

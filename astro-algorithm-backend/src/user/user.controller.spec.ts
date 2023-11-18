@@ -104,7 +104,9 @@ describe('UserController', () => {
 
     it('should handle user not found by ID', async () => {
       jest.spyOn(userService, 'findUserById').mockResolvedValue(null);
-      await expect(controller.getUserById('invalidObjectId')).rejects.toThrowError(NotFoundException);
+      await expect(controller.getUserById('invalidObjectId')).rejects.toThrowError(
+        NotFoundException,
+      );
     });
   });
 

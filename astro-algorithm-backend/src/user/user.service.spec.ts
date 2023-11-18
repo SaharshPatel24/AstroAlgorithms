@@ -96,7 +96,9 @@ describe('UserService', () => {
   describe('updateUser', () => {
     it('should update a user', async () => {
       const result = await service.updateUser(mockUpdateUserDto);
-      expect(userModel.findByIdAndUpdate).toHaveBeenCalledWith(validObjectId, mockUpdateUserDto, { new: true });
+      expect(userModel.findByIdAndUpdate).toHaveBeenCalledWith(validObjectId, mockUpdateUserDto, {
+        new: true,
+      });
       expect(result).toEqual(mockUser);
     });
     // Add other test cases for updateUser as needed
