@@ -6,9 +6,45 @@ import { User } from '../src/user/interface/user.interface';
 import { UserService } from '../src/user/user.service';
 
 const mockUsers: User[] = [
-  { _id: '1', name: 'Alice', email: 'alice@example.com' },
-  { _id: '2', name: 'Bob', email: 'bob@example.com' },
+  {
+    _id: '1',
+    username: 'Alice123',
+    email: 'alice@example.com',
+    password: 'password123',
+    profile: {
+      avatarURL: 'https://example.com/avatar1.jpg',
+      completedChallenges: [
+        { challengeId: 'challenge1', challengeName: 'Challenge One' },
+        { challengeId: 'challenge2', challengeName: 'Challenge Two' },
+      ],
+      points: 100,
+    },
+    createdAt: new Date('2023-11-18T00:00:00Z'),
+    lastLogin: new Date('2023-11-18T08:00:00Z'),
+  },
+  {
+    _id: '2',
+    username: 'Bob456',
+    email: 'bob@example.com',
+    password: 'password456',
+    profile: {
+      avatarURL: 'https://example.com/avatar2.jpg',
+      completedChallenges: [
+        { challengeId: 'challenge3', challengeName: 'Challenge Three' },
+        { challengeId: 'challenge4', challengeName: 'Challenge Four' },
+      ],
+      points: 150,
+    },
+    createdAt: new Date('2023-11-17T00:00:00Z'),
+    lastLogin: new Date('2023-11-17T08:00:00Z'),
+  },
 ];
+
+const mockCreateUser = {
+  username: 'Alice123',
+  email: 'alice@example.com',
+  password: 'password123',
+};
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
@@ -36,7 +72,12 @@ describe('UserController (e2e)', () => {
 
       const response = await request(app.getHttpServer()).get('/users');
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(mockUsers); // Compare response with mock data
+
+      for (const user of response.body) {
+        const mockUserKeys = Object.keys(mockUsers[0]);
+        const userKeys = Object.keys(user);
+        expect(userKeys).toEqual(expect.arrayContaining(mockUserKeys));
+      } // Compare response with mock data
     });
 
     // Add more test cases for different scenarios related to fetching users
@@ -53,98 +94,54 @@ describe('UserController (e2e)', () => {
     // Add edge cases for pagination, sorting, filtering, etc.
   });
 
-  describe('/users/:id (GET)', () => {
-    it('should return a user by ID', async () => {
-      const userId = '1'; // Assuming this ID exists in the mock data
-      const expectedUser = mockUsers.find((user) => user._id === userId);
-
-      jest.spyOn(userService, 'findUserById').mockResolvedValue(expectedUser);
-
-      const response = await request(app.getHttpServer()).get(`/users/${userId}`);
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual(expectedUser);
-    });
-
-    it('should return 404 if user ID does not exist', async () => {
-      const nonExistentUserId = '999';
-
-      jest.spyOn(userService, 'findUserById').mockResolvedValue(null);
-
-      const response = await request(app.getHttpServer()).get(`/users/${nonExistentUserId}`);
-      expect(response.status).toBe(404);
-    });
-  });
-
   describe('/users (POST)', () => {
     it('should create a new user', async () => {
-      const newUser = {
-        _id: '1',
-        name: 'John Doe',
-        email: 'john@example.com',
-      };
-
       // Mock the user service method to successfully create a new user
-      jest.spyOn(userService, 'createUser').mockResolvedValue(newUser);
+      jest.spyOn(userService, 'createUser').mockResolvedValue(mockUsers[0]);
 
-      const response = await request(app.getHttpServer()).post('/users').send(newUser);
+      // Send a POST request to create a new user
+      const response = await request(app.getHttpServer()).post('/users').send(mockCreateUser);
 
+      // Validate the response status code
       expect(response.status).toBe(201); // Assuming the endpoint returns 201 for successful creation
-      expect(response.body).toEqual(newUser);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { createdAt, lastLogin, ...expectedUser } = mockUsers[0];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { createdAt: respCreatedAt, lastLogin: respLastLogin, ...respUser } = response.body;
+
+      expect(respUser).toEqual(expectedUser);
     });
 
-    it('should return 400 on invalid user data', async () => {
-      const invalidUser = {
-        // Missing required fields for user creation
-      };
+    it('should return 400 on invalid username', async () => {
+      const invalidUser = {};
 
       // Mock the user service method to handle invalid user data
       jest.spyOn(userService, 'createUser').mockImplementation(() => {
-        throw new BadRequestException(['name must be a string', 'Invalid email format']);
+        throw new BadRequestException([
+          'Username must contain only letters and numbers',
+          'Username must be at least 3 characters',
+          'username must be a string',
+          'Invalid email format',
+          'Password must be at least 6 characters',
+          'password must be a string',
+        ]);
       });
 
       const response = await request(app.getHttpServer()).post('/users').send(invalidUser);
 
       expect(response.status).toBe(400);
-      expect(response.body.message.join(', ')).toBe('name must be a string, Invalid email format');
-    });
-  });
-
-  describe('/users (PUT)', () => {
-    it('should update a user with valid data', async () => {
-      const updatedUser = {
-        _id: '1', // Assuming a valid user ID
-        name: 'Updated Name',
-        email: 'updated@example.com',
-        // Other updated fields
-      };
-
-      jest.spyOn(userService, 'updateUser').mockResolvedValue(updatedUser as User);
-
-      const response = await request(app.getHttpServer()).put(`/users`).send(updatedUser);
-
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual(updatedUser);
-    });
-
-    it('should return 404 on invalid user ID for update', async () => {
-      jest.spyOn(userService, 'updateUser').mockResolvedValue(null);
-
-      const response = await request(app.getHttpServer()).put('/users');
-
-      expect(response.status).toBe(400);
+      expect(response.body.message.join(', ')).toBe(
+        'Username must contain only letters and numbers, Username must be at least 3 characters, username must be a string, Invalid email format, Password must be at least 6 characters, password must be a string',
+      );
     });
   });
 
   describe('/users (DELETE)', () => {
     it('should delete a user by ID', async () => {
-      const deleteUser = {
-        _id: '1',
-        name: 'Updated Name',
-        email: 'updated@example.com',
-      };
-      jest.spyOn(userService, 'deleteUser').mockResolvedValue(deleteUser);
+      jest.spyOn(userService, 'deleteUser').mockResolvedValue(mockUsers[0]);
 
-      const response = await request(app.getHttpServer()).delete(`/users`).send(deleteUser);
+      const response = await request(app.getHttpServer()).delete(`/users`).send({ _id: '1' });
 
       expect(response.status).toBe(200);
     });

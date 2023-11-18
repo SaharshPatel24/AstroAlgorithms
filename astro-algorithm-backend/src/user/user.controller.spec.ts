@@ -3,6 +3,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
 import { Types } from 'mongoose'; // Import Types from mongoose
+import { User } from './interface/user.interface';
 
 describe('UserController', () => {
   let controller: UserController;
@@ -10,24 +11,31 @@ describe('UserController', () => {
 
   const validObjectId = new Types.ObjectId().toHexString();
 
-  const mockUser = {
-    _id: validObjectId, // Assuming MongoDB returns _id as string
-    name: 'mockUser',
-    email: 'mock@example.com',
+  const mockUser: User = {
+    _id: validObjectId,
+    username: 'john_doe123',
+    email: 'john@example.com',
+    password: 'hashed_password', // Assuming a hashed password
+    profile: {
+      avatarURL: 'https://via.placeholder.com/150', // Placeholder URL for avatar
+      completedChallenges: [
+        { challengeId: validObjectId, challengeName: 'Challenge 1' },
+        { challengeId: validObjectId, challengeName: 'Challenge 2' },
+      ],
+      points: 100,
+      // Other profile properties as per your schema
+    },
+    createdAt: new Date('2023-01-01'), // A sample creation date
+    lastLogin: new Date('2023-10-01'),
     // Other properties based on your schema
   };
 
-  const createUserDto = {
-    name: 'newUser',
-    email: 'new@example.com',
+  // Mock data for creating a new user
+  const mockCreateUserDto = {
+    username: 'test',
+    email: 'test@example.com',
+    password: '123456',
     // Other properties based on your CreateUserDto
-  };
-
-  const updateUserDto = {
-    _id: validObjectId, // Assuming MongoDB returns _id as string
-    name: 'updatedUser',
-    email: 'updated@example.com',
-    // Other properties based on your UpdateUserDto
   };
 
   const userServiceMock = {
@@ -73,19 +81,19 @@ describe('UserController', () => {
       jest.spyOn(userService, 'createUser').mockResolvedValue({
         ...mockUser,
         _id: validObjectId, // Mocking the MongoDB generated ID
-        ...createUserDto,
+        ...mockCreateUserDto,
       });
 
-      const result = await controller.createUser(createUserDto);
+      const result = await controller.createUser(mockCreateUserDto);
 
-      expect(result).toEqual(expect.objectContaining(createUserDto));
+      expect(result).toEqual(expect.objectContaining(mockCreateUserDto));
     });
 
     it('should handle errors when creating a user', async () => {
       const error = new BadRequestException('Invalid input');
       jest.spyOn(userService, 'createUser').mockRejectedValue(error);
 
-      await expect(controller.createUser(createUserDto)).rejects.toThrowError(error);
+      await expect(controller.createUser(mockCreateUserDto)).rejects.toThrowError(error);
     });
   });
 
@@ -96,56 +104,15 @@ describe('UserController', () => {
     });
   });
 
-  describe('getUserById', () => {
-    it('should return a user by ID', async () => {
-      const result = await controller.getUserById(validObjectId);
-      expect(result).toEqual(mockUser);
-    });
-
-    it('should handle user not found by ID', async () => {
-      jest.spyOn(userService, 'findUserById').mockResolvedValue(null);
-      await expect(controller.getUserById('invalidObjectId')).rejects.toThrowError(
-        NotFoundException,
-      );
-    });
-  });
-
-  describe('updateUser', () => {
-    it('should update a user', async () => {
-      jest.spyOn(userService, 'updateUser').mockResolvedValue({
-        ...mockUser,
-        ...updateUserDto,
-      });
-      const result = await controller.updateUser(updateUserDto);
-      expect(result).toEqual(expect.objectContaining(updateUserDto));
-    });
-
-    it('should handle user not found when updating', async () => {
-      jest.spyOn(userService, 'updateUser').mockResolvedValue(undefined);
-      try {
-        await controller.updateUser(updateUserDto);
-      } catch (error) {
-        expect(error).toBeInstanceOf(NotFoundException);
-        expect(error.message).toEqual('User not found');
-      }
-    });
-
-    it('should handle errors when updating a user', async () => {
-      const error = new BadRequestException('Invalid input');
-      jest.spyOn(userService, 'updateUser').mockRejectedValue(error);
-      await expect(controller.updateUser(updateUserDto)).rejects.toThrowError(error);
-    });
-  });
-
   describe('deleteUser', () => {
     it('should delete a user', async () => {
-      const result = await controller.deleteUser(mockUser);
-      expect(result).toEqual(mockUser);
+      const result = await controller.deleteUser(mockUser._id);
+      expect(result).toEqual(mockUser._id);
     });
 
     it('should handle user not found when deleting', async () => {
       jest.spyOn(userService, 'deleteUser').mockResolvedValue(null);
-      await expect(controller.deleteUser(mockUser)).rejects.toThrowError(NotFoundException);
+      await expect(controller.deleteUser(mockUser._id)).rejects.toThrowError(NotFoundException);
     });
   });
 });

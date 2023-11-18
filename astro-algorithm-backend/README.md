@@ -17,6 +17,10 @@ The backend API, developed with NEST.js and Node.js, manages user authentication
 
 The backend uses MongoDB to store user data, challenges, and game progress. Ensure proper configuration by updating the `.env` file with your database connection details.
 
+## Testing
+
+Leveraging Jest for comprehensive unit testing and end-to-end (E2E) testing, ensuring robustness and functionality of our backend API. 🧪  
+
 ## Contributing
 
 Contributions are welcome!

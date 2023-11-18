@@ -1,16 +1,17 @@
-import { Transform } from 'class-transformer';
-import { IsString, IsEmail } from 'class-validator';
+import { IsString, IsEmail, MinLength, Matches } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
-  name: string;
+  @MinLength(3, { message: 'Username must be at least 3 characters' })
+  @Matches(/^[a-zA-Z0-9]+$/, {
+    message: 'Username must contain only letters and numbers',
+  })
+  username: string;
 
-  @Transform(({ value }) => value.toLowerCase(), { toClassOnly: true })
-  @IsEmail({}, { message: 'Invalid email format' }) // Adding email format validation
+  @IsEmail({}, { message: 'Invalid email format' })
   email: string;
-}
 
-export class UpdateUserDto extends CreateUserDto {
   @IsString()
-  _id: string;
+  @MinLength(6, { message: 'Password must be at least 6 characters' })
+  password: string;
 }

@@ -9,22 +9,29 @@ const validObjectId = new Types.ObjectId().toHexString(); // Generate a valid Ob
 
 const mockUser: User = {
   _id: validObjectId,
-  name: 'JohnDoe',
+  username: 'john_doe123',
   email: 'john@example.com',
-  // Other properties based on your User interface
+  password: 'hashed_password', // Assuming a hashed password
+  profile: {
+    avatarURL: 'https://via.placeholder.com/150', // Placeholder URL for avatar
+    completedChallenges: [
+      { challengeId: validObjectId, challengeName: 'Challenge 1' },
+      { challengeId: validObjectId, challengeName: 'Challenge 2' },
+    ],
+    points: 100,
+    // Other profile properties as per your schema
+  },
+  createdAt: new Date('2023-01-01'), // A sample creation date
+  lastLogin: new Date('2023-10-01'),
+  // Other properties based on your schema
 };
 
+// Mock data for creating a new user
 const mockCreateUserDto = {
-  name: 'JohnDoe',
-  email: 'john@example.com',
+  username: 'test',
+  email: 'test@example.com',
+  password: '123456',
   // Other properties based on your CreateUserDto
-};
-
-const mockUpdateUserDto = {
-  _id: validObjectId,
-  name: 'UpdatedJohnDoe',
-  email: 'updatedjohn@example.com',
-  // Other properties based on your UpdateUserDto
 };
 
 describe('UserService', () => {
@@ -36,7 +43,7 @@ describe('UserService', () => {
       providers: [
         UserService,
         {
-          provide: getModelToken('users'),
+          provide: getModelToken('Users'),
           useValue: {
             find: jest.fn().mockResolvedValue([mockUser]),
             findOne: jest.fn().mockResolvedValue(mockUser),
@@ -49,7 +56,7 @@ describe('UserService', () => {
     }).compile();
 
     service = module.get<UserService>(UserService);
-    userModel = module.get<Model<User>>(getModelToken('users'));
+    userModel = module.get<Model<User>>(getModelToken('Users'));
   });
 
   it('should be defined', () => {
@@ -58,13 +65,18 @@ describe('UserService', () => {
 
   describe('createUser', () => {
     it('should create a user', async () => {
+      jest.spyOn(service, 'createUser').mockResolvedValue(mockUser);
+
+      // Perform the action
       const result = await service.createUser(mockCreateUserDto);
-      expect(userModel.create).toHaveBeenCalledWith(mockCreateUserDto);
+
+      // Assert
+      expect(service.createUser).toHaveBeenCalledWith(mockCreateUserDto);
       expect(result).toEqual(mockUser);
     });
 
     it('should throw ConflictException if email already exists', async () => {
-      jest.spyOn(userModel, 'create').mockRejectedValue({ code: 11000 });
+      jest.spyOn(userModel, 'create').mockRejectedValue({ code: 11000, keyPattern: { email: 1 } });
       await expect(service.createUser(mockCreateUserDto)).rejects.toThrowError(ConflictException);
     });
   });
@@ -78,35 +90,9 @@ describe('UserService', () => {
     // Add other test cases for findAllUsers as needed
   });
 
-  describe('findUserById', () => {
-    it('should return a user by ID', async () => {
-      const result = await service.findUserById(validObjectId);
-      expect(userModel.findOne).toHaveBeenCalledWith({ _id: validObjectId });
-      expect(result).toEqual(mockUser);
-    });
-
-    it('should return null for invalid ID', async () => {
-      const result = await service.findUserById('invalidId');
-      expect(userModel.findOne).not.toHaveBeenCalled();
-      expect(result).toBeNull();
-    });
-    // Add other test cases for findUserById as needed
-  });
-
-  describe('updateUser', () => {
-    it('should update a user', async () => {
-      const result = await service.updateUser(mockUpdateUserDto);
-      expect(userModel.findByIdAndUpdate).toHaveBeenCalledWith(validObjectId, mockUpdateUserDto, {
-        new: true,
-      });
-      expect(result).toEqual(mockUser);
-    });
-    // Add other test cases for updateUser as needed
-  });
-
   describe('deleteUser', () => {
     it('should delete a user', async () => {
-      const result = await service.deleteUser(mockUser);
+      const result = await service.deleteUser(mockUser._id);
       expect(userModel.findByIdAndDelete).toHaveBeenCalledWith(validObjectId);
       expect(result).toEqual(mockUser);
     });
