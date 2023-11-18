@@ -3,18 +3,19 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>astro-algorithm-backend documentation</title>
+        <title>Astro Algorithms</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
         <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/Material Design.css">
     </head>
     <body>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
-            <a href="../" class="navbar-brand">astro-algorithm-backend documentation</a>
+            <a href="../" class="navbar-brand">Astro Algorithms</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
 
@@ -68,6 +69,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service handling user-related operations.</p>
+
+            </p>
 
 
 
@@ -119,7 +127,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/user/user.service.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/user/user.service.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -184,14 +192,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="13"
-                                    class="link-to-prism">src/user/user.service.ts:13</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="23"
+                                    class="link-to-prism">src/user/user.service.ts:23</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Create a new user.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -202,6 +212,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -216,6 +227,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>User data for creation.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -225,7 +242,8 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>Newly created user.</p>
+
                             </div>
                 </td>
             </tr>
@@ -253,14 +271,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="53"
-                                    class="link-to-prism">src/user/user.service.ts:53</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/user/user.service.ts:74</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Delete a user by ID.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -271,6 +291,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -285,6 +306,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>ID of the user to be deleted.</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -294,7 +321,8 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>Deleted user if found, otherwise null.</p>
+
                             </div>
                 </td>
             </tr>
@@ -322,19 +350,25 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="49"
-                                    class="link-to-prism">src/user/user.service.ts:49</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/user/user.service.ts:63</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Retrieve all users.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/User.html" target="_self" >Promise&lt;User[]&gt;</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <p>List of all users.</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -353,10 +387,20 @@ import { User } from &#x27;./interface/user.interface&#x27;;
 import * as gravatar from &#x27;gravatar&#x27;;
 import * as bcrypt from &#x27;bcrypt&#x27;;
 
+/**
+ * Service handling user-related operations.
+ */
 @Injectable()
 export class UserService {
   constructor(@InjectModel(&#x27;Users&#x27;) private readonly userModel: Model&lt;User&gt;) {}
 
+  /**
+   * Create a new user.
+   * @param {CreateUserDto} userDto - User data for creation.
+   * @returns {Promise&lt;User&gt;} Newly created user.
+   * @throws {ConflictException} If username or email already exists.
+   * @throws {InternalServerErrorException} If creation fails due to unexpected errors.
+   */
   async createUser(userDto: CreateUserDto): Promise&lt;User&gt; {
     try {
       const { username, email, password } &#x3D; userDto;
@@ -393,18 +437,31 @@ export class UserService {
     }
   }
 
+  /**
+   * Retrieve all users.
+   * @returns {Promise&lt;User[]&gt;} List of all users.
+   */
   async findAllUsers(): Promise&lt;User[]&gt; {
+    // Retrieves all users from the database
     return await this.userModel.find();
   }
 
+  /**
+   * Delete a user by ID.
+   * @param {string} userId - ID of the user to be deleted.
+   * @returns {Promise&lt;User | null&gt;} Deleted user if found, otherwise null.
+   * @throws {InternalServerErrorException} If deletion fails due to unexpected errors.
+   */
   async deleteUser(userId: string): Promise&lt;User | null&gt; {
     try {
+      // Check if the provided userId is a valid MongoDB ObjectId
       if (!Types.ObjectId.isValid(userId)) {
         return null;
       }
+      // Find and delete the user by ID
       return await this.userModel.findByIdAndDelete(userId);
     } catch (error) {
-      throw new InternalServerErrorException(&#x27;Failed to create user&#x27;);
+      throw new InternalServerErrorException(&#x27;Failed to delete user&#x27;);
     }
   }
 }

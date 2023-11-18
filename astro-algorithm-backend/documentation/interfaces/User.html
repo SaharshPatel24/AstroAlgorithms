@@ -3,18 +3,19 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>astro-algorithm-backend documentation</title>
+        <title>Astro Algorithms</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
         <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/Material Design.css">
     </head>
     <body>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
-            <a href="../" class="navbar-brand">astro-algorithm-backend documentation</a>
+            <a href="../" class="navbar-brand">Astro Algorithms</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
 
@@ -75,6 +76,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Represents the structure of a user.</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -173,6 +181,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Unique identifier for the user</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -206,6 +220,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Date when the user account was created</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -239,6 +259,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>User&#39;s email address</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -272,6 +298,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Date of the user&#39;s last login</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -305,6 +337,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>User&#39;s hashed password</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -338,6 +376,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>User&#39;s profile information</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -371,6 +415,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>User&#39;s chosen username</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -379,21 +429,34 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface UserProfile {
+  /** URL of the user&#x27;s avatar */
   avatarURL: string;
+  /** List of completed challenges containing their IDs and names */
   completedChallenges: {
     challengeId: string;
     challengeName: string;
   }[];
+  /** Number of points associated with the user */
   points: number;
 }
 
+/**
+ * Represents the structure of a user.
+ */
 export interface User {
+  /** Unique identifier for the user */
   _id: string;
+  /** User&#x27;s chosen username */
   username: string;
+  /** User&#x27;s email address */
   email: string;
+  /** User&#x27;s hashed password */
   password: string;
+  /** User&#x27;s profile information */
   profile: UserProfile;
+  /** Date when the user account was created */
   createdAt: Date;
+  /** Date of the user&#x27;s last login */
   lastLogin: Date;
 }
 </code></pre>

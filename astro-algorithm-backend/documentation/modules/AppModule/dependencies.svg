@@ -22,53 +22,41 @@
 <text text-anchor="start" x="429.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_AppModule</title>
-<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="50,-70 50,-195 446,-195 446,-70 50,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="120,-70 120,-195 376,-195 376,-70 120,-70"/>
 </g>
 <g id="clust3" class="cluster">
 <title>cluster_AppModule_imports</title>
-<polygon fill="none" stroke="black" points="58,-78 58,-130 438,-130 438,-78 58,-78"/>
-</g>
-<!-- ChallengesModule -->
-<g id="node1" class="node">
-<title>ChallengesModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="429.76,-122 426.76,-126 405.76,-126 402.76,-122 308.24,-122 308.24,-86 429.76,-86 429.76,-122"/>
-<text text-anchor="middle" x="369" y="-99.8" font-family="Times,serif" font-size="14.00">ChallengesModule</text>
-</g>
-<!-- AppModule -->
-<g id="node4" class="node">
-<title>AppModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="271.66,-187 268.66,-191 247.66,-191 244.66,-187 188.34,-187 188.34,-151 271.66,-151 271.66,-187"/>
-<text text-anchor="middle" x="230" y="-164.8" font-family="Times,serif" font-size="14.00">AppModule</text>
-</g>
-<!-- ChallengesModule&#45;&gt;AppModule -->
-<g id="edge1" class="edge">
-<title>ChallengesModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="black" d="M369,-122.11C369,-141.34 369,-169 369,-169 369,-169 281.7,-169 281.7,-169"/>
-<polygon fill="black" stroke="black" points="281.7,-165.5 271.7,-169 281.7,-172.5 281.7,-165.5"/>
+<polygon fill="none" stroke="black" points="128,-78 128,-130 368,-130 368,-78 128,-78"/>
 </g>
 <!-- MongoDBModule -->
-<g id="node2" class="node">
+<g id="node1" class="node">
 <title>MongoDBModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="289.94,-122 286.94,-126 265.94,-126 262.94,-122 170.06,-122 170.06,-86 289.94,-86 289.94,-122"/>
-<text text-anchor="middle" x="230" y="-99.8" font-family="Times,serif" font-size="14.00">MongoDBModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="359.94,-122 356.94,-126 335.94,-126 332.94,-122 240.06,-122 240.06,-86 359.94,-86 359.94,-122"/>
+<text text-anchor="middle" x="300" y="-99.8" font-family="Times,serif" font-size="14.00">MongoDBModule</text>
+</g>
+<!-- AppModule -->
+<g id="node3" class="node">
+<title>AppModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="280.66,-187 277.66,-191 256.66,-191 253.66,-187 197.34,-187 197.34,-151 280.66,-151 280.66,-187"/>
+<text text-anchor="middle" x="239" y="-164.8" font-family="Times,serif" font-size="14.00">AppModule</text>
 </g>
 <!-- MongoDBModule&#45;&gt;AppModule -->
-<g id="edge2" class="edge">
+<g id="edge1" class="edge">
 <title>MongoDBModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="black" d="M230,-122.11C230,-122.11 230,-140.99 230,-140.99"/>
-<polygon fill="black" stroke="black" points="226.5,-140.99 230,-150.99 233.5,-140.99 226.5,-140.99"/>
+<path fill="none" stroke="black" d="M260.55,-122.11C260.55,-122.11 260.55,-140.99 260.55,-140.99"/>
+<polygon fill="black" stroke="black" points="257.05,-140.99 260.55,-150.99 264.05,-140.99 257.05,-140.99"/>
 </g>
 <!-- UserModule -->
-<g id="node3" class="node">
+<g id="node2" class="node">
 <title>UserModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="151.98,-122 148.98,-126 127.98,-126 124.98,-122 66.02,-122 66.02,-86 151.98,-86 151.98,-122"/>
-<text text-anchor="middle" x="109" y="-99.8" font-family="Times,serif" font-size="14.00">UserModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="221.98,-122 218.98,-126 197.98,-126 194.98,-122 136.02,-122 136.02,-86 221.98,-86 221.98,-122"/>
+<text text-anchor="middle" x="179" y="-99.8" font-family="Times,serif" font-size="14.00">UserModule</text>
 </g>
 <!-- UserModule&#45;&gt;AppModule -->
-<g id="edge3" class="edge">
+<g id="edge2" class="edge">
 <title>UserModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="black" d="M109,-122.11C109,-141.34 109,-169 109,-169 109,-169 178.02,-169 178.02,-169"/>
-<polygon fill="black" stroke="black" points="178.02,-172.5 188.02,-169 178.02,-165.5 178.02,-172.5"/>
+<path fill="none" stroke="black" d="M209.58,-122.11C209.58,-122.11 209.58,-140.99 209.58,-140.99"/>
+<polygon fill="black" stroke="black" points="206.08,-140.99 209.58,-150.99 213.08,-140.99 206.08,-140.99"/>
 </g>
 </g>
 </svg>

@@ -3,18 +3,19 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>astro-algorithm-backend documentation</title>
+        <title>Astro Algorithms</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
         <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/Material Design.css">
     </head>
     <body>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
-            <a href="../" class="navbar-brand">astro-algorithm-backend documentation</a>
+            <a href="../" class="navbar-brand">Astro Algorithms</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
 
@@ -66,13 +67,13 @@
 <title>cluster_UserModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="174,-70 174,-268 322,-268 322,-70 174,-70"/>
 </g>
-<g id="clust6" class="cluster">
-<title>cluster_UserModule_providers</title>
-<polygon fill="none" stroke="black" points="182,-78 182,-130 314,-130 314,-78 182,-78"/>
-</g>
 <g id="clust4" class="cluster">
 <title>cluster_UserModule_exports</title>
 <polygon fill="none" stroke="black" points="196,-208 196,-260 300,-260 300,-208 196,-208"/>
+</g>
+<g id="clust6" class="cluster">
+<title>cluster_UserModule_providers</title>
+<polygon fill="none" stroke="black" points="182,-78 182,-130 314,-130 314,-78 182,-78"/>
 </g>
 <!-- UserService  -->
 <g id="node1" class="node">
@@ -145,6 +146,13 @@
 
 
 
+        <p class="comment">
+            <h3>Description</h3>
+        </p>
+        <p class="comment">
+            <p>Module responsible for user-related features.</p>
+
+        </p>
 
 
         <div class="container-fluid module">
@@ -192,8 +200,13 @@ import { UserService } from &#x27;./user.service&#x27;;
 import { UserController } from &#x27;./user.controller&#x27;;
 import { userSchema } from &#x27;./schema/user.schema&#x27;;
 
+/**
+ * Module responsible for user-related features.
+ */
 @Module({
-  imports: [MongooseModule.forFeature([{ name: &#x27;Users&#x27;, schema: userSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: &#x27;Users&#x27;, schema: userSchema }]),
+  ],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],

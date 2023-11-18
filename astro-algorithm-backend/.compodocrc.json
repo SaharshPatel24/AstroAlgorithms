@@ -1,0 +1,9 @@
+{
+    "$schema": "./node_modules/@compodoc/compodoc/src/config/schema.json",
+    "tsconfig": "tsconfig.json",
+    "name": "Astro Algorithms",
+    "disableCoverage": false,
+    "hideGenerator": true,
+    "theme": "Material Design",
+    "disableDependencies": true
+}

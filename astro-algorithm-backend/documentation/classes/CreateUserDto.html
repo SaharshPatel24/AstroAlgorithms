@@ -3,18 +3,19 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>astro-algorithm-backend documentation</title>
+        <title>Astro Algorithms</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
         <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/Material Design.css">
     </head>
     <body>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
-            <a href="../" class="navbar-brand">astro-algorithm-backend documentation</a>
+            <a href="../" class="navbar-brand">Astro Algorithms</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
 
@@ -72,6 +73,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Data Transfer Object (DTO) for creating a user.</p>
+
+            </p>
 
 
 
@@ -155,10 +163,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/user/dto/user.dto.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/user/dto/user.dto.ts:32</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Email address of the user.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -193,10 +207,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/user/dto/user.dto.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/user/dto/user.dto.ts:44</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Password of the user.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -232,10 +252,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/user/dto/user.dto.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/user/dto/user.dto.ts:21</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Username of the user.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -254,11 +280,18 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ApiProperty } from &#x27;@nestjs/swagger&#x27;;
 import { IsString, IsEmail, MinLength, Matches } from &#x27;class-validator&#x27;;
 
+/**
+ * Data Transfer Object (DTO) for creating a user.
+ */
 export class CreateUserDto {
+  /**
+   * Username of the user.
+   * @example &#x27;test1234&#x27;
+   */
   @ApiProperty({
     example: &#x27;test1234&#x27;,
-    required: true
- })
+    required: true,
+  })
   @IsString()
   @MinLength(3, { message: &#x27;Username must be at least 3 characters&#x27; })
   @Matches(/^[a-zA-Z0-9]+$/, {
@@ -266,16 +299,24 @@ export class CreateUserDto {
   })
   username: string;
 
+  /**
+   * Email address of the user.
+   * @example &#x27;test@example.com&#x27;
+   */
   @ApiProperty({
     example: &#x27;test@example.com&#x27;,
-    required: true  
+    required: true,
   })
   @IsEmail({}, { message: &#x27;Invalid email format&#x27; })
   email: string;
 
+  /**
+   * Password of the user.
+   * @example &#x27;123456&#x27;
+   */
   @ApiProperty({
     example: &#x27;123456&#x27;,
-    required: true  
+    required: true,
   })
   @IsString()
   @MinLength(6, { message: &#x27;Password must be at least 6 characters&#x27; })

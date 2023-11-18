@@ -1,30 +1,53 @@
-// user.schema.ts
 import * as mongoose from 'mongoose';
 
-interface UserProfileDocument extends Document {
+/**
+ * Interface representing user profile data in the database.
+ */
+interface UserProfileDocument extends mongoose.Document {
+  /** URL of the user's avatar */
   avatarURL: string;
+  /** List of completed challenges containing their IDs and names */
   completedChallenges: {
     challengeId: string;
     challengeName: string;
   }[];
+  /** Number of points associated with the user */
   points: number;
 }
 
-interface UserDocument extends Document {
+/**
+ * Interface representing the user document in the database.
+ */
+interface UserDocument extends mongoose.Document {
+  /** Unique identifier for the user */
   _id: string;
+  /** User's chosen username */
   username: string;
+  /** User's email address */
   email: string;
+  /** User's hashed password */
   password: string;
+  /** User's profile information */
   profile: UserProfileDocument;
+  /** Date when the user account was created */
   createdAt: Date;
+  /** Date of the user's last login */
   lastLogin: Date;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface CustomUpdateQuery<T extends Document> {
+/**
+ * Defines a custom update query for user documents.
+ * It allows updating the user's email.
+ */
+interface CustomUpdateQuery<T extends mongoose.Document> {
+  /** New email address for updating the user's email */
   email?: string;
 }
 
+
+/**
+ * Schema definition for the user profile.
+ */
 const userProfileSchema = new mongoose.Schema<UserProfileDocument>({
   avatarURL: {
     type: String,
@@ -42,6 +65,9 @@ const userProfileSchema = new mongoose.Schema<UserProfileDocument>({
   },
 });
 
+/**
+ * Schema definition for the user document.
+ */
 export const userSchema = new mongoose.Schema<UserDocument>({
   username: {
     type: String,
@@ -70,6 +96,9 @@ export const userSchema = new mongoose.Schema<UserDocument>({
   },
 });
 
+/**
+ * Middleware function to convert the email to lowercase before saving the user document.
+ */
 userSchema.pre('save', function (next) {
   if (this.isModified('email')) {
     this.email = this.email.toLowerCase();
@@ -77,6 +106,9 @@ userSchema.pre('save', function (next) {
   next();
 });
 
+/**
+ * Middleware function to convert the updated email to lowercase before updating the user document.
+ */
 userSchema.pre('findOneAndUpdate', function (next) {
   const update = this.getUpdate() as CustomUpdateQuery<any>;
   if (update && update.email) {
@@ -85,4 +117,7 @@ userSchema.pre('findOneAndUpdate', function (next) {
   next();
 });
 
-export const User = mongoose.model('Users', userSchema);
+/**
+ * Model for the 'Users' collection based on the user schema.
+ */
+export const User = mongoose.model<UserDocument>('Users', userSchema);

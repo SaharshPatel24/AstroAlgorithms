@@ -3,18 +3,19 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>astro-algorithm-backend documentation</title>
+        <title>Astro Algorithms</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
         <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/Material Design.css">
     </head>
     <body>
 
         <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
-            <a href="../" class="navbar-brand">astro-algorithm-backend documentation</a>
+            <a href="../" class="navbar-brand">Astro Algorithms</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
 
@@ -72,6 +73,13 @@
             </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Controller for managing users</p>
+
+            </p>
 
 
 
@@ -155,14 +163,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/user/user.controller.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="33"
+                                    class="link-to-prism">src/user/user.controller.ts:33</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Create a new user</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -173,6 +183,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -187,6 +198,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>User data to be created</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -196,7 +213,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>The created user</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -232,14 +252,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="39"
-                                    class="link-to-prism">src/user/user.controller.ts:39</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="56"
+                                    class="link-to-prism">src/user/user.controller.ts:56</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Delete a user by ID</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -250,6 +272,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -264,6 +287,12 @@
                                             </td>
 
 
+                                            <td>
+                                                    <ul>
+<li>ID of the user to be deleted (passed in the request body)</li>
+</ul>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -273,7 +302,10 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <ul>
+<li>The deleted user</li>
+</ul>
+
                             </div>
                 </td>
             </tr>
@@ -309,19 +341,27 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="34"
-                                    class="link-to-prism">src/user/user.controller.ts:34</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="46"
+                                    class="link-to-prism">src/user/user.controller.ts:46</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Get all users</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/User.html" target="_self" >Promise&lt;User[]&gt;</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <ul>
+<li>Array of users</li>
+</ul>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -346,11 +386,19 @@ import { CreateUserDto } from &#x27;./dto/user.dto&#x27;;
 import { User } from &#x27;./interface/user.interface&#x27;;
 import { ApiResponse, ApiTags } from &#x27;@nestjs/swagger&#x27;;
 
+/**
+ * Controller for managing users
+ */
 @ApiTags(&#x27;Users&#x27;)
 @Controller(&#x27;users&#x27;)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  /**
+   * Create a new user
+   * @param {CreateUserDto} createUserDto - User data to be created
+   * @returns {Promise&lt;User&gt;} - The created user
+   */
   @Post()
   @ApiResponse({ status: 201, description: &#x27;The user has been successfully created.&#x27;})
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -362,13 +410,22 @@ export class UserController {
     }
   }
 
+  /**
+   * Get all users
+   * @returns {Promise&lt;User[]&gt;} - Array of users
+   */
   @Get()
   async getAllUsers(): Promise&lt;User[]&gt; {
     return await this.userService.findAllUsers();
   }
 
+  /**
+   * Delete a user by ID
+   * @param {string} userId - ID of the user to be deleted (passed in the request body)
+   * @returns {Promise&lt;User&gt;} - The deleted user
+   */
   @Delete()
-  async deleteUser(@Body() userId: string): Promise&lt;User&gt; {
+  async deleteUser(@Body(&#x27;userId&#x27;) userId: string): Promise&lt;User&gt; {
     const deletedUser &#x3D; await this.userService.deleteUser(userId);
     if (!deletedUser) {
       throw new NotFoundException(&#x27;User not found&#x27;);

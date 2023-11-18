@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { MongoDBModule } from './mongo/mongo.module';
-import { ChallengesModule } from './challenges/challenges.module';
 
+/**
+ * Root module of the NestJS application
+ */
 @Module({
-  imports: [MongoDBModule, UserModule, ChallengesModule],
+  imports: [MongoDBModule, UserModule],
 })
 export class AppModule {}
