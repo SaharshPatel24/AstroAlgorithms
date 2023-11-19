@@ -32,7 +32,7 @@ async function bootstrap() {
 
     // Start the application on port 8080
     const configService = app.get(ConfigService);
-  const PORT = configService.get('PORT');
+  const PORT = configService.get('PORT') || 3000;
   await app.listen(PORT);
   console.log(`Application is running on: ${PORT}`);
   } catch (error) {
