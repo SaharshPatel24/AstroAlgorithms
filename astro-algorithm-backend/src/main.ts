@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as express from 'express';
+import { ConfigService } from '@nestjs/config';
 
 /**
  * Bootstraps the application.
@@ -31,7 +32,10 @@ async function bootstrap() {
     app.use('/', express.static(compodocPath));
 
     // Start the application on port 8080
-    await app.listen(3000);
+    const configService = app.get(ConfigService);
+  const PORT = configService.get('PORT');
+  await app.listen(PORT);
+  console.log(`Application is running on: ${PORT}`);
   } catch (error) {
     console.error('Error occurred while bootstrapping the application:', error);
   }
