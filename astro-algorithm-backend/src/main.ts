@@ -31,10 +31,8 @@ async function bootstrap() {
     app.use('/', express.static(compodocPath));
 
     // Start the application on port 8080
-    const configService = app.get(ConfigService);
-  const PORT = configService.get('PORT') || 3000;
-  await app.listen(PORT);
-  console.log(`Application is running on: ${PORT}`);
+  await app.listen(3000);
+  console.log(`Application is running`);
   } catch (error) {
     console.error('Error occurred while bootstrapping the application:', error);
   }
