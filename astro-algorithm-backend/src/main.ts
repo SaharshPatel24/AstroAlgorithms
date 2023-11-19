@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as express from 'express';
-import { ConfigService } from '@nestjs/config';
+import * as path from 'path';
 
 /**
  * Bootstraps the application.
@@ -25,7 +25,7 @@ async function bootstrap() {
     SwaggerModule.setup('api', app, document);
 
     // Define the path for Compodoc
-    const compodocPath = '../documentation';
+    const compodocPath = path.join(__dirname, '../documentation');
 
     // Serve Compodoc files statically
     app.use('/', express.static(compodocPath));
