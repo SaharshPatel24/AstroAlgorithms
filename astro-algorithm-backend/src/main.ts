@@ -6,7 +6,6 @@ import { ConfigService } from '@nestjs/config';
 
 /**
  * Bootstraps the application.
- * @returns {Promise<void>}
  */
 async function bootstrap() {
   try {
@@ -26,7 +25,7 @@ async function bootstrap() {
     SwaggerModule.setup('api', app, document);
 
     // Define the path for Compodoc
-    const compodocPath = 'C:/Users/patel/OneDrive/Desktop/AstroAlgorithms/astro-algorithm-backend/documentation';
+    const compodocPath = '../documentation';
 
     // Serve Compodoc files statically
     app.use('/', express.static(compodocPath));
