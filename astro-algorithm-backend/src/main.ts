@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { SwaggerModule, DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as express from 'express';
 import * as path from 'path';
@@ -17,12 +17,15 @@ async function bootstrap() {
       .setTitle('AstroAlgorithm')
       .setDescription('AstroAlgorithm, a space-themed coding challenges game.')
       .setVersion('1.0')
-      .addTag('AstroAlgorithm')
       .build();
+
+    const customOptions: SwaggerCustomOptions = {
+        customSiteTitle: 'AstroAlgorithm API',
+    }
 
     // Create Swagger document
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
+    SwaggerModule.setup('api', app, document, customOptions);
 
     // Define the path for Compodoc
     const compodocPath = path.join(__dirname, '../documentation');
@@ -32,7 +35,6 @@ async function bootstrap() {
 
     // Start the application on port 8080
   await app.listen(3000);
-  console.log(`Application is running`);
   } catch (error) {
     console.error('Error occurred while bootstrapping the application:', error);
   }
