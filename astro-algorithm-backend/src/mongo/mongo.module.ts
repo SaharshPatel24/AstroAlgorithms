@@ -3,6 +3,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongoConfigService } from './mongo.service';
 
+/**
+ * Module responsible for MongoDB Connection.
+ */
 @Module({
   imports: [
     ConfigModule.forRoot(),
