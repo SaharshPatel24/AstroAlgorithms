@@ -5,17 +5,17 @@
 
 # Backend dependencies (if using npm)
 /backend/node_modules
+/backend/.env
+/backend/.vercel
 
 # Frontend dependencies (if using npm)
 /frontend/node_modules
+/frontend/.env
 
 # Build artifacts
 /backend/dist
 /frontend/build
 /frontend/.next  # For Next.js projects
-
-# Environment variables
-.env
 
 # Logs and debugging
 logs
