@@ -20,8 +20,17 @@ async function bootstrap() {
       .build();
 
     const customOptions: SwaggerCustomOptions = {
-        customSiteTitle: 'AstroAlgorithm API',
-    }
+      customSiteTitle: 'AstroAlgorithm API',
+      customJs: [
+        'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.js',
+      ],
+      customCssUrl: [
+        'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css',
+      ],
+    };
 
     // Create Swagger document
     const document = SwaggerModule.createDocument(app, config);
@@ -34,7 +43,7 @@ async function bootstrap() {
     app.use('/', express.static(compodocPath));
 
     // Start the application on port 8080
-  await app.listen(3000);
+    await app.listen(8080);
   } catch (error) {
     console.error('Error occurred while bootstrapping the application:', error);
   }

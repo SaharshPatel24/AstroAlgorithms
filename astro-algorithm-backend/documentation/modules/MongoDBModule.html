@@ -71,7 +71,7 @@
             <h3>Description</h3>
         </p>
         <p class="comment">
-            <p>Module responsible for initializing the MongoDB connection.</p>
+            <p>Module responsible for MongoDB Connection.</p>
 
         </p>
 
@@ -89,19 +89,18 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module } from &#x27;@nestjs/common&#x27;;
 import { MongooseModule } from &#x27;@nestjs/mongoose&#x27;;
 import { ConfigModule, ConfigService } from &#x27;@nestjs/config&#x27;;
+import { MongoConfigService } from &#x27;./mongo.service&#x27;;
 
 /**
- * Module responsible for initializing the MongoDB connection.
+ * Module responsible for MongoDB Connection.
  */
 @Module({
   imports: [
-    ConfigModule.forRoot(), // Ensure ConfigModule is imported
+    ConfigModule.forRoot(),
     MongooseModule.forRootAsync({
-      imports: [ConfigModule], // Import ConfigModule to use ConfigService
-      useFactory: async (configService: ConfigService) &#x3D;&gt; ({
-        uri: configService.get&lt;string&gt;(&#x27;MONGODB_URI&#x27;),
-      }),
-      inject: [ConfigService], // Inject ConfigService into the factory
+      imports: [ConfigModule],
+      useClass: MongoConfigService,
+      inject: [ConfigService],
     }),
   ],
 })
